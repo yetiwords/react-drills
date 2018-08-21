@@ -3,19 +3,52 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
-  render() {
+  constructor() {
+    super();
+    this.state = {
+      list: [
+        'pasta',
+        'pickle',
+        'salsa',
+        'lemon',
+        'humus',
+        'soda'
+      ],
+        userInput: '',
+        updatedList: [],
+      }
+      this.update = this.update.bind(this);
+    
+
+    }
+    update(val) {
+      let shallowCopy = this.state.list.filter((e)=> e.includes(val))
+      this.setState({updatedList: shallowCopy})
+    }
+  
+      render() {
+        let displayList = this.state.list.map((e, i) => {
+          return (
+            <h2 key={i}>{e}</h2>
+          )
+        }
+      )
+        let updated = this.state.updatedList.map((e, i) => {
+          return (
+            <h2 key={i}>{e}</h2>
+          )
+        }
+      )
+
+      
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <br />
+      <input onChange={(e) => {this.update(e.target.value)}}></input>
+        <div className="App">{this.state.updatedList.length ? updated : displayList}</div>
       </div>
     );
   }
 }
 
-export default App;
+export default App
